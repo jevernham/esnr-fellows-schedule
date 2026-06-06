@@ -148,7 +148,8 @@
   .legend-swatch.hassan    { background: var(--hassan-light);    border: 1.5px solid var(--hassan-mid); }
   .legend-swatch.kashkoush { background: var(--kashkoush-light); border: 1.5px solid var(--kashkoush-mid); }
   .legend-swatch.mahmoud   { background: var(--mahmoud-light);   border: 1.5px solid var(--mahmoud-mid); }
-  .legend-swatch.or3       { background: #f3e8ff; border: 1.5px solid #c4b5fd; }
+  .legend-swatch.or3.hassan    { background: var(--hassan-light);    border: 1.5px solid var(--hassan-mid); }
+  .legend-swatch.or3.kashkoush { background: var(--kashkoush-light); border: 1.5px solid var(--kashkoush-mid); }
   .legend-swatch.holiday   { background: var(--holiday-accent); border: 1.5px solid #fcd34d; }
   .legend-swatch.vac       { background: #fff; border: 1.5px dashed #94a3b8; }
 
@@ -241,9 +242,6 @@
 
   .or3-badge {
     display: block;
-    background: #f3e8ff;
-    color: #7c3aed;
-    border: 1px solid #c4b5fd;
     border-radius: 4px;
     padding: 1px 4px;
     font-size: 0.59rem;
@@ -254,6 +252,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .or3-badge.hassan    { background: var(--hassan-light);    color: var(--hassan-primary);    border: 1px solid var(--hassan-mid); }
+  .or3-badge.kashkoush { background: var(--kashkoush-light); color: var(--kashkoush-primary); border: 1px solid var(--kashkoush-mid); }
 
   .holiday-label {
     font-size: 0.57rem;
@@ -317,7 +317,7 @@
       <div class="legend-item"><div class="legend-swatch hassan"></div>Hassan (on call)</div>
       <div class="legend-item"><div class="legend-swatch kashkoush"></div>Kashkoush (on call)</div>
       <div class="legend-item"><div class="legend-swatch mahmoud"></div>Mahmoud (on call)</div>
-      <div class="legend-item"><div class="legend-swatch or3"></div>OR3 coverage week</div>
+      <div class="legend-item"><div class="legend-swatch or3 hassan"></div>OR3 week (fellow color)</div>
       <div class="legend-item"><div class="legend-swatch holiday"></div>Federal holiday</div>
       <div class="legend-item"><div class="legend-swatch vac"></div>Fellow vacation / off</div>
     </div>
@@ -726,7 +726,7 @@ function renderCalendar() {
         // OR3 badge — show on the first day of each week (Monday, or Jul 1)
         if (or3F && (wd === 1 || k === '2026-07-01')) {
           const badge = document.createElement('div');
-          badge.className = 'or3-badge';
+          badge.className = 'or3-badge ' + or3F;
           badge.textContent = 'OR3: ' + LABELS[or3F];
           cell.appendChild(badge);
         }
