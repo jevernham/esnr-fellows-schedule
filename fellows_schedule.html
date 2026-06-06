@@ -554,7 +554,16 @@ const CALL = {}; // dateKey → fellow
       const days = slots[s];
       if (days.length === 0) return;
       const fellow = pickFellow(slotFellows[s], days, s === 2);
-      days.forEach(d => { CALL[dateKey(d)] = fellow; });
+      days.forEach(d => {
+        const k = dateKey(d);
+        if (!onVac(fellow, k)) {
+          CALL[k] = fellow;
+        } else {
+          // Fellow is on vacation this specific day — substitute a backup
+          const backup = ROT.find(f => f !== fellow && !onVac(f, k) && !(f === 'mahmoud' && d < mahmoudStart));
+          CALL[k] = backup || fellow;
+        }
+      });
     });
   });
 
