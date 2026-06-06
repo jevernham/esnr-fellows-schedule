@@ -478,13 +478,17 @@ const OR3 = {}; // dateKey → 'hassan' | 'kashkoush'
 const CALL = {}; // dateKey → fellow
 
 (function buildCall() {
-  const YEAR_START = dt(2026, 7, 1);
   const YEAR_END   = dt(2027, 6, 30);
   const ROT = ['hassan', 'mahmoud', 'kashkoush'];
 
+  // Running count used to pick the least-loaded fellow when substituting
+  const load = { hassan: 0, mahmoud: 0, kashkoush: 0 };
+  function leastLoaded(candidates) {
+    return candidates.reduce((a, b) => load[a] <= load[b] ? a : b);
+  }
+
   // Build ordered week list
   const weeks = [];
-  // Week 0: partial Jul 1-5
   weeks.push({ mon: dt(2026,7,1), end: dt(2026,7,5), idx: 0 });
   let ws = dt(2026,7,6);
   let wi = 1;
@@ -500,27 +504,22 @@ const CALL = {}; // dateKey → fellow
   function canCover(fellow, slotDays) {
     if (slotDays.length === 0) return true;
     if (fellow === 'mahmoud' && slotDays[0] < mahmoudStart) return false;
-    // Fellow must be available for at least one day (not all-vacation)
     return slotDays.some(d => !onVac(fellow, dateKey(d)));
   }
 
   function pickFellow(preferred, slotDays, isWeekend) {
-    // Check weekend-off request
     if (isWeekend && slotDays.some(d => weekendOff(preferred, dateKey(d)))) {
       const alt = ROT.filter(f => f !== preferred && canCover(f, slotDays));
-      if (alt.length > 0) return alt[0];
+      if (alt.length > 0) return leastLoaded(alt);
     }
     if (canCover(preferred, slotDays)) return preferred;
-    // Need to find alternate
     const others = ROT.filter(f => f !== preferred && canCover(f, slotDays));
-    if (others.length > 0) return others[0];
-    // All fellows constrained — pick anyone available at all
+    if (others.length > 0) return leastLoaded(others);
     for (const f of ROT) { if (canCover(f, slotDays)) return f; }
-    return preferred; // last resort
+    return preferred;
   }
 
   weeks.forEach(week => {
-    // Bucket days into the 3 slots
     const slots = [[], [], []];
     let c = new Date(week.mon);
     while (c <= week.end) {
@@ -534,35 +533,32 @@ const CALL = {}; // dateKey → fellow
     // Special rule for weeks 0 & 1 (Jul 1-12, Mahmoud not available)
     let slotFellows;
     if (week.idx === 0) {
-      // Partial week Jul 1–5: slot0 (Mon-Tue) is empty.
-      // Jul 1–2 (Wed-Thu) → Kashkoush, Jul 3–5 (Fri-Sun) → Hassan
-      // Note: holiday override will assign Jul 3–6 to Hassan anyway.
       slotFellows = ['kashkoush', 'kashkoush', 'hassan'];
     } else if (week.idx === 1) {
-      // Jul 6–12: split Kashkoush and Hassan. Mon-Tue → Kashkoush, Wed-Thu → Hassan, Fri-Sun → Kashkoush
-      // Jul 6 will be holiday-overridden to Hassan (Jul 4th weekend extends to Jul 6).
       slotFellows = ['kashkoush', 'hassan', 'kashkoush'];
     } else {
       // Normal 2-2-3 rotation: ROT[(weekIdx + slotIdx) % 3]
-      // This ensures each fellow covers each slot every 3 weeks, and the Mon-Tue
-      // fellow in week N does the Fri-Sun in week N+1 (ideal handoff pattern).
       slotFellows = [0, 1, 2].map(s => ROT[(week.idx + s) % 3]);
     }
 
-    // Assign each slot, respecting overrides
     [0, 1, 2].forEach(s => {
       const days = slots[s];
       if (days.length === 0) return;
       const fellow = pickFellow(slotFellows[s], days, s === 2);
       days.forEach(d => {
         const k = dateKey(d);
+        let assigned;
         if (!onVac(fellow, k)) {
-          CALL[k] = fellow;
+          assigned = fellow;
         } else {
-          // Fellow is on vacation this specific day — substitute a backup
-          const backup = ROT.find(f => f !== fellow && !onVac(f, k) && !(f === 'mahmoud' && d < mahmoudStart));
-          CALL[k] = backup || fellow;
+          // Fellow on vacation this day — pick least-loaded available backup
+          const avail = ROT.filter(f =>
+            f !== fellow && !onVac(f, k) && !(f === 'mahmoud' && d < mahmoudStart)
+          );
+          assigned = avail.length > 0 ? leastLoaded(avail) : fellow;
         }
+        CALL[k] = assigned;
+        load[assigned]++;
       });
     });
   });
