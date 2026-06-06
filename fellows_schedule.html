@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESNR Fellows Call Schedule 2026–2027</title>
+<style>
+  :root {
+    --hassan-primary: #2563eb;
+    --hassan-light: #dbeafe;
+    --hassan-mid: #93c5fd;
+    --kashkoush-primary: #16a34a;
+    --kashkoush-light: #dcfce7;
+    --kashkoush-mid: #86efac;
+    --mahmoud-primary: #ea580c;
+    --mahmoud-light: #ffedd5;
+    --mahmoud-mid: #fdba74;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --header-bg: #1e3a5f;
+    --weekend-bg: #f1f5f9;
+    --holiday-accent: #fef3c7;
+    --radius: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--header-bg);
+    color: #fff;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  header p {
+    font-size: 0.82rem;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  .header-right { display: flex; gap: 10px; align-items: center; }
+  .btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-weight: 500;
+  }
+  .btn:hover { background: rgba(255,255,255,0.25); }
+
+  /* LAYOUT */
+  .app-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 20px;
+    position: sticky;
+    top: 72px;
+    height: calc(100vh - 72px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sidebar-section h3 {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fellow-card {
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+  }
+  .fellow-card.hassan    { background: var(--hassan-light);    border-color: var(--hassan-mid); }
+  .fellow-card.kashkoush { background: var(--kashkoush-light); border-color: var(--kashkoush-mid); }
+  .fellow-card.mahmoud   { background: var(--mahmoud-light);   border-color: var(--mahmoud-mid); }
+
+  .fellow-card-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  }
+  .fellow-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .fellow-dot.hassan    { background: var(--hassan-primary); }
+  .fellow-dot.kashkoush { background: var(--kashkoush-primary); }
+  .fellow-dot.mahmoud   { background: var(--mahmoud-primary); }
+
+  .fellow-name { font-weight: 600; font-size: 0.9rem; }
+  .fellow-role {
+    font-size: 0.68rem; color: var(--text-secondary); margin-left: auto;
+    background: rgba(0,0,0,0.07); padding: 1px 6px; border-radius: 20px;
+  }
+
+  .stat-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.76rem; color: var(--text-secondary); padding: 2px 0;
+  }
+  .stat-val { font-weight: 700; font-size: 0.86rem; color: var(--text-primary); }
+
+  .legend-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.76rem; color: var(--text-secondary); margin-bottom: 7px;
+  }
+  .legend-swatch { width: 28px; height: 16px; border-radius: 4px; flex-shrink: 0; }
+  .legend-swatch.hassan    { background: var(--hassan-light);    border: 1.5px solid var(--hassan-mid); }
+  .legend-swatch.kashkoush { background: var(--kashkoush-light); border: 1.5px solid var(--kashkoush-mid); }
+  .legend-swatch.mahmoud   { background: var(--mahmoud-light);   border: 1.5px solid var(--mahmoud-mid); }
+  .legend-swatch.or3       { background: #f3e8ff; border: 1.5px solid #c4b5fd; }
+  .legend-swatch.holiday   { background: var(--holiday-accent); border: 1.5px solid #fcd34d; }
+  .legend-swatch.vac       { background: #fff; border: 1.5px dashed #94a3b8; }
+
+  /* MAIN */
+  .main-content { padding: 24px 28px; }
+
+  .year-label {
+    font-size: 1.1rem; font-weight: 700; color: var(--text-secondary);
+    margin-bottom: 20px; letter-spacing: -0.01em;
+  }
+
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .month-card {
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .month-header {
+    background: var(--header-bg);
+    color: #fff;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .dow-header {
+    text-align: center;
+    font-size: 0.63rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    background: #f8fafc;
+  }
+  .dow-header.weekend { color: #94a3b8; }
+
+  .day-cell {
+    min-height: 74px;
+    padding: 4px 5px 5px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .day-cell:nth-child(7n) { border-right: none; }
+  .day-cell.empty    { background: #fafafa; }
+  .day-cell.weekend  { background: var(--weekend-bg); }
+  .day-cell.holiday  { background: var(--holiday-accent); }
+
+  .day-num {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 3px;
+    line-height: 1.1;
+  }
+
+  .call-tag {
+    display: block;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .call-tag.hassan    { background: var(--hassan-light);    color: var(--hassan-primary);    border: 1px solid var(--hassan-mid); }
+  .call-tag.kashkoush { background: var(--kashkoush-light); color: var(--kashkoush-primary); border: 1px solid var(--kashkoush-mid); }
+  .call-tag.mahmoud   { background: var(--mahmoud-light);   color: var(--mahmoud-primary);   border: 1px solid var(--mahmoud-mid); }
+  .call-tag.vac-tag   { background: #fff; color: var(--text-muted); border: 1px dashed #cbd5e1; font-style: italic; }
+
+  .or3-badge {
+    display: block;
+    background: #f3e8ff;
+    color: #7c3aed;
+    border: 1px solid #c4b5fd;
+    border-radius: 4px;
+    padding: 1px 4px;
+    font-size: 0.59rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .holiday-label {
+    font-size: 0.57rem;
+    color: #b45309;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .hol-dot {
+    display: inline-block; width: 5px; height: 5px;
+    border-radius: 50%; background: #f59e0b;
+    vertical-align: middle; margin-right: 2px; margin-bottom: 1px;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: #fff; }
+    header { position: static; background: #1e3a5f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 12px 20px; }
+    .sidebar { display: none; }
+    .app-body { grid-template-columns: 1fr; }
+    .main-content { padding: 10px; }
+    .months-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .month-card { break-inside: avoid; }
+    .day-cell { min-height: 56px; }
+    .btn { display: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media (max-width: 800px) {
+    .app-body { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+    .months-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>ESNR Fellows Call Schedule</h1>
+    <p>Academic Year &nbsp;&middot;&nbsp; July 1, 2026 &ndash; June 30, 2027</p>
+  </div>
+  <div class="header-right">
+    <button class="btn" onclick="window.print()">&#128438;&nbsp; Print / Save PDF</button>
+  </div>
+</header>
+
+<div class="app-body">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <h3>Fellow Statistics</h3>
+      <div id="stats-container"></div>
+    </div>
+    <div class="sidebar-section">
+      <h3>Legend</h3>
+      <div class="legend-item"><div class="legend-swatch hassan"></div>Hassan (on call)</div>
+      <div class="legend-item"><div class="legend-swatch kashkoush"></div>Kashkoush (on call)</div>
+      <div class="legend-item"><div class="legend-swatch mahmoud"></div>Mahmoud (on call)</div>
+      <div class="legend-item"><div class="legend-swatch or3"></div>OR3 coverage week</div>
+      <div class="legend-item"><div class="legend-swatch holiday"></div>Federal holiday</div>
+      <div class="legend-item"><div class="legend-swatch vac"></div>Fellow vacation / off</div>
+    </div>
+    <div class="sidebar-section">
+      <h3>Call Pattern (weekly)</h3>
+      <div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.9;">
+        <div><strong style="font-size:0.72rem;">Mon &ndash; Tue</strong>&ensp;2 nights</div>
+        <div><strong style="font-size:0.72rem;">Wed &ndash; Thu</strong>&ensp;2 nights</div>
+        <div><strong style="font-size:0.72rem;">Fri &ndash; Sun</strong>&ensp;3 nights</div>
+        <div style="margin-top:6px;font-size:0.69rem;color:var(--text-muted);">
+          Rotation: Hassan &rarr; Mahmoud &rarr; Kashkoush
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="year-label">2026 &ndash; 2027 Academic Year</div>
+    <div class="months-grid" id="calendar"></div>
+  </main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════
+
+const FELLOWS = ['hassan', 'kashkoush', 'mahmoud'];
+const LABELS  = { hassan: 'Hassan', kashkoush: 'Kashkoush', mahmoud: 'Mahmoud' };
+const ROLES   = { hassan: 'Senior', kashkoush: 'Senior', mahmoud: 'Junior' };
+
+const MONTH_NAMES = ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'];
+const DOW_SHORT   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+// ═══════════════════════════════════════════
+// DATE HELPERS  (local midnight, no timezone issues)
+// ═══════════════════════════════════════════
+
+function dt(y, m, d)   { return new Date(y, m - 1, d); }
+function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
+function dow(d)        { return d.getDay(); } // 0=Sun … 6=Sat
+
+function dateKey(d) {
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
+/** Return a Set of dateKeys for [start, end] inclusive */
+function dRange(start, end) {
+  const s = new Set();
+  let c = new Date(start);
+  while (c <= end) { s.add(dateKey(c)); c = addDays(c, 1); }
+  return s;
+}
+
+// ═══════════════════════════════════════════
+// VACATION BLOCKS (fellow → array of Sets)
+// ═══════════════════════════════════════════
+
+const VACATIONS = {
+  hassan: [
+    dRange(dt(2026,9,7),  dt(2026,9,11)),
+    dRange(dt(2027,1,18), dt(2027,1,22)),
+    dRange(dt(2027,4,5),  dt(2027,4,9))
+  ],
+  kashkoush: [
+    dRange(dt(2026,8,10), dt(2026,8,24)),   // paternity leave
+    dRange(dt(2026,10,12),dt(2026,10,16)),
+    dRange(dt(2027,3,29), dt(2027,4,2)),
+    dRange(dt(2027,6,7),  dt(2027,6,11))
+  ],
+  mahmoud: [
+    dRange(dt(2026,12,21),dt(2026,12,27)),
+    dRange(dt(2027,3,1),  dt(2027,3,7)),
+    dRange(dt(2027,5,10), dt(2027,5,16))
+  ]
+};
+
+// Weekend-off requests (treated like soft vacation for Fri/Sat/Sun)
+const WEEKENDS_OFF = {
+  hassan:    [dRange(dt(2026,9,5),  dt(2026,9,6))],
+  kashkoush: [dRange(dt(2026,10,31),dt(2026,11,1))],
+  mahmoud:   []
+};
+
+function onVac(fellow, k)        { return VACATIONS[fellow].some(s => s.has(k)); }
+function weekendOff(fellow, k)   { return WEEKENDS_OFF[fellow].some(s => s.has(k)); }
+
+// ═══════════════════════════════════════════
+// FEDERAL HOLIDAYS
+// ═══════════════════════════════════════════
+
+const HOL_MAP = {}; // dateKey → { label, primary }
+
+function addHol(start, end, primary, label) {
+  let c = new Date(start);
+  while (c <= end) { HOL_MAP[dateKey(c)] = { label, primary }; c = addDays(c, 1); }
+}
+
+addHol(dt(2026,7,3),  dt(2026,7,6),  'hassan',    'Jul 4th');
+addHol(dt(2026,9,4),  dt(2026,9,7),  'kashkoush', 'Labor Day');
+addHol(dt(2026,11,26),dt(2026,11,30),'mahmoud',   'Thanksgiving');
+addHol(dt(2026,12,24),dt(2026,12,28),'hassan',    'Christmas');
+addHol(dt(2027,1,1),  dt(2027,1,4),  'kashkoush', "New Year's");
+addHol(dt(2027,5,28), dt(2027,5,31), 'mahmoud',   'Memorial Day');
+addHol(dt(2027,6,18), dt(2027,6,21), 'hassan',    'Juneteenth');
+
+// ═══════════════════════════════════════════
+// OR3 SCHEDULE  (senior fellows, alternating weeks)
+// Week 0 (partial): Jul 1–5 = Hassan
+// Then Mon–Sun full weeks alternating starting Kashkoush.
+// Kashkoush paternity Aug 10–24 (weeks Aug 10-16, Aug 17-23) → Hassan covers.
+// ═══════════════════════════════════════════
+
+const OR3 = {}; // dateKey → 'hassan' | 'kashkoush'
+
+(function buildOR3() {
+  const YEAR_END = dt(2027, 6, 30);
+
+  // Paternity-leave week starts (Mondays of those 2 weeks)
+  const patLeave = new Set([dateKey(dt(2026,8,10)), dateKey(dt(2026,8,17))]);
+
+  // Partial week: Jul 1 (Wed) – Jul 5 (Sun) → Hassan
+  let c = dt(2026, 7, 1);
+  const partial_end = dt(2026, 7, 5);
+  while (c <= partial_end) { OR3[dateKey(c)] = 'hassan'; c = addDays(c, 1); }
+
+  // Full weeks starting Jul 6 (Monday)
+  let weekMon = dt(2026, 7, 6);
+  let wIdx = 1; // even=hassan, odd=kashkoush; week0 was hassan so idx=1 starts kashkoush
+
+  while (weekMon <= YEAR_END) {
+    const wk = dateKey(weekMon);
+    let fellow = patLeave.has(wk) ? 'hassan' : (wIdx % 2 === 0 ? 'hassan' : 'kashkoush');
+    // Fill 7 days
+    let day = new Date(weekMon);
+    for (let i = 0; i < 7 && day <= YEAR_END; i++) {
+      OR3[dateKey(day)] = fellow;
+      day = addDays(day, 1);
+    }
+    wIdx++;
+    weekMon = addDays(weekMon, 7);
+  }
+})();
+
+// ═══════════════════════════════════════════
+// CALL SCHEDULE  (2-2-3 rotating)
+// Slots: [Mon-Tue], [Wed-Thu], [Fri-Sat-Sun]
+// Rotation order: hassan(0) → mahmoud(1) → kashkoush(2) → …
+// Slot s in week w → rot[(w*3 + s) % 3]
+// Mahmoud unavailable Jul 1–12.
+// If assigned fellow is unavailable for a slot, pick best alternate.
+// Holiday hard-override applied after.
+// ═══════════════════════════════════════════
+
+const CALL = {}; // dateKey → fellow
+
+(function buildCall() {
+  const YEAR_START = dt(2026, 7, 1);
+  const YEAR_END   = dt(2027, 6, 30);
+  const ROT = ['hassan', 'mahmoud', 'kashkoush'];
+
+  // Build ordered week list
+  const weeks = [];
+  // Week 0: partial Jul 1-5
+  weeks.push({ mon: dt(2026,7,1), end: dt(2026,7,5), idx: 0 });
+  let ws = dt(2026,7,6);
+  let wi = 1;
+  while (ws <= YEAR_END) {
+    const we = addDays(ws, 6);
+    weeks.push({ mon: ws, end: we > YEAR_END ? YEAR_END : we, idx: wi });
+    ws = addDays(ws, 7);
+    wi++;
+  }
+
+  const mahmoudStart = dt(2026, 7, 13);
+
+  function canCover(fellow, slotDays) {
+    if (slotDays.length === 0) return true;
+    if (fellow === 'mahmoud' && slotDays[0] < mahmoudStart) return false;
+    // Fellow must be available for at least one day (not all-vacation)
+    return slotDays.some(d => !onVac(fellow, dateKey(d)));
+  }
+
+  function pickFellow(preferred, slotDays, isWeekend) {
+    // Check weekend-off request
+    if (isWeekend && slotDays.some(d => weekendOff(preferred, dateKey(d)))) {
+      const alt = ROT.filter(f => f !== preferred && canCover(f, slotDays));
+      if (alt.length > 0) return alt[0];
+    }
+    if (canCover(preferred, slotDays)) return preferred;
+    // Need to find alternate
+    const others = ROT.filter(f => f !== preferred && canCover(f, slotDays));
+    if (others.length > 0) return others[0];
+    // All fellows constrained — pick anyone available at all
+    for (const f of ROT) { if (canCover(f, slotDays)) return f; }
+    return preferred; // last resort
+  }
+
+  weeks.forEach(week => {
+    // Bucket days into the 3 slots
+    const slots = [[], [], []];
+    let c = new Date(week.mon);
+    while (c <= week.end) {
+      const d = dow(c);
+      if      (d === 1 || d === 2) slots[0].push(new Date(c)); // Mon,Tue
+      else if (d === 3 || d === 4) slots[1].push(new Date(c)); // Wed,Thu
+      else                          slots[2].push(new Date(c)); // Fri,Sat,Sun
+      c = addDays(c, 1);
+    }
+
+    // Special rule for weeks 0 & 1 (Jul 1-12, Mahmoud not available)
+    let slotFellows;
+    if (week.idx === 0) {
+      // Partial week Jul 1–5: slot0 (Mon-Tue) is empty.
+      // Jul 1–2 (Wed-Thu) → Kashkoush, Jul 3–5 (Fri-Sun) → Hassan
+      // Note: holiday override will assign Jul 3–6 to Hassan anyway.
+      slotFellows = ['kashkoush', 'kashkoush', 'hassan'];
+    } else if (week.idx === 1) {
+      // Jul 6–12: split Kashkoush and Hassan. Mon-Tue → Kashkoush, Wed-Thu → Hassan, Fri-Sun → Kashkoush
+      // Jul 6 will be holiday-overridden to Hassan (Jul 4th weekend extends to Jul 6).
+      slotFellows = ['kashkoush', 'hassan', 'kashkoush'];
+    } else {
+      // Normal 2-2-3 rotation: ROT[(weekIdx + slotIdx) % 3]
+      // This ensures each fellow covers each slot every 3 weeks, and the Mon-Tue
+      // fellow in week N does the Fri-Sun in week N+1 (ideal handoff pattern).
+      slotFellows = [0, 1, 2].map(s => ROT[(week.idx + s) % 3]);
+    }
+
+    // Assign each slot, respecting overrides
+    [0, 1, 2].forEach(s => {
+      const days = slots[s];
+      if (days.length === 0) return;
+      const fellow = pickFellow(slotFellows[s], days, s === 2);
+      days.forEach(d => { CALL[dateKey(d)] = fellow; });
+    });
+  });
+
+  // Holiday override: reassign to primary unless primary is on vacation
+  Object.entries(HOL_MAP).forEach(([k, h]) => {
+    if (!onVac(h.primary, k)) {
+      CALL[k] = h.primary;
+    }
+  });
+})();
+
+// ═══════════════════════════════════════════
+// STATISTICS
+// ═══════════════════════════════════════════
+
+const STATS = {};
+FELLOWS.forEach(f => { STATS[f] = { nights: 0, wknights: 0, holidays: 0, or3weeks: 0, vacdays: 0 }; });
+
+(function computeStats() {
+  const or3WeekSeen = new Set();
+  let c = dt(2026, 7, 1);
+  const end = dt(2027, 6, 30);
+  while (c <= end) {
+    const k = dateKey(c);
+    const fellow = CALL[k];
+    if (fellow && !onVac(fellow, k)) {
+      STATS[fellow].nights++;
+      const d = dow(c);
+      if (d === 0 || d === 5 || d === 6) STATS[fellow].wknights++;
+      if (HOL_MAP[k]) STATS[fellow].holidays++;
+    }
+    // OR3 — count once per week per fellow using Monday (or Jul 1)
+    const or3f = OR3[k];
+    if (or3f) {
+      const d = dow(c);
+      // Week anchor: Monday, except Jul 1 which is Wednesday (first partial week)
+      if (d === 1 || k === '2026-07-01') {
+        if (!or3WeekSeen.has(k)) {
+          or3WeekSeen.add(k);
+          STATS[or3f].or3weeks++;
+        }
+      }
+    }
+    // Vacation days
+    FELLOWS.forEach(f => { if (onVac(f, k)) STATS[f].vacdays++; });
+    c = addDays(c, 1);
+  }
+})();
+
+// ═══════════════════════════════════════════
+// RENDER: STATS SIDEBAR
+// ═══════════════════════════════════════════
+
+function renderStats() {
+  const container = document.getElementById('stats-container');
+  FELLOWS.forEach(f => {
+    const s = STATS[f];
+    const card = document.createElement('div');
+    card.className = 'fellow-card ' + f;
+    card.innerHTML = `
+      <div class="fellow-card-header">
+        <div class="fellow-dot ${f}"></div>
+        <span class="fellow-name">${LABELS[f]}</span>
+        <span class="fellow-role">${ROLES[f]}</span>
+      </div>
+      <div class="stat-row"><span>Call nights</span><span class="stat-val">${s.nights}</span></div>
+      <div class="stat-row"><span>Weekend nights</span><span class="stat-val">${s.wknights}</span></div>
+      <div class="stat-row"><span>Holiday nights</span><span class="stat-val">${s.holidays}</span></div>
+      ${f !== 'mahmoud'
+        ? `<div class="stat-row"><span>OR3 weeks</span><span class="stat-val">${s.or3weeks}</span></div>`
+        : ''}
+      <div class="stat-row"><span>Vacation days</span><span class="stat-val">${s.vacdays}</span></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════
+// RENDER: MONTHLY CALENDAR
+// ═══════════════════════════════════════════
+
+function renderCalendar() {
+  const container = document.getElementById('calendar');
+  const MONTHS = [
+    [2026,7],[2026,8],[2026,9],[2026,10],[2026,11],[2026,12],
+    [2027,1],[2027,2],[2027,3],[2027,4], [2027,5], [2027,6]
+  ];
+
+  MONTHS.forEach(([year, month]) => {
+    const firstDay   = dt(year, month, 1);
+    const daysInMon  = new Date(year, month, 0).getDate();
+    const startDow   = dow(firstDay); // 0=Sun
+
+    const card = document.createElement('div');
+    card.className = 'month-card';
+
+    // Month header
+    const hdr = document.createElement('div');
+    hdr.className = 'month-header';
+    hdr.textContent = MONTH_NAMES[month - 1] + ' ' + year;
+    card.appendChild(hdr);
+
+    // Calendar grid
+    const grid = document.createElement('div');
+    grid.className = 'cal-grid';
+
+    // Day-of-week header row
+    DOW_SHORT.forEach((label, i) => {
+      const h = document.createElement('div');
+      h.className = 'dow-header' + (i === 0 || i === 6 ? ' weekend' : '');
+      h.textContent = label;
+      grid.appendChild(h);
+    });
+
+    // Leading empty cells
+    for (let i = 0; i < startDow; i++) {
+      const e = document.createElement('div');
+      e.className = 'day-cell empty';
+      grid.appendChild(e);
+    }
+
+    // Day cells
+    for (let d = 1; d <= daysInMon; d++) {
+      const date  = dt(year, month, d);
+      const k     = dateKey(date);
+      const wd    = dow(date);
+      const isWkd = wd === 0 || wd === 6;
+      const hol   = HOL_MAP[k];
+      const callF = CALL[k];
+      const or3F  = OR3[k];
+
+      // Is this day outside the schedule window?
+      const inSchedule = date >= dt(2026,7,1) && date <= dt(2027,6,30);
+
+      const cell = document.createElement('div');
+      let cls = 'day-cell';
+      if (!inSchedule) cls += ' empty';
+      else if (hol)    cls += (isWkd ? ' weekend holiday' : ' holiday');
+      else if (isWkd)  cls += ' weekend';
+      cell.className = cls;
+
+      // Day number
+      const dn = document.createElement('div');
+      dn.className = 'day-num';
+      dn.textContent = d;
+      cell.appendChild(dn);
+
+      if (inSchedule) {
+        // Call tag
+        if (callF) {
+          const callOnVac = onVac(callF, k);
+          const tag = document.createElement('div');
+          tag.className = 'call-tag ' + (callOnVac ? 'vac-tag' : callF);
+          tag.textContent = callOnVac ? LABELS[callF] + ' (vac)' : LABELS[callF];
+          cell.appendChild(tag);
+        }
+
+        // Other fellows' vacation markers (not the on-call fellow)
+        FELLOWS.forEach(f => {
+          if (f !== callF && onVac(f, k)) {
+            const vt = document.createElement('div');
+            vt.className = 'call-tag vac-tag';
+            vt.style.fontSize = '0.58rem';
+            vt.textContent = LABELS[f] + ' off';
+            cell.appendChild(vt);
+          }
+        });
+
+        // OR3 badge — show on the first day of each week (Monday, or Jul 1)
+        if (or3F && (wd === 1 || k === '2026-07-01')) {
+          const badge = document.createElement('div');
+          badge.className = 'or3-badge';
+          badge.textContent = 'OR3: ' + LABELS[or3F];
+          cell.appendChild(badge);
+        }
+
+        // Holiday label
+        if (hol) {
+          const hl = document.createElement('div');
+          hl.className = 'holiday-label';
+          hl.innerHTML = '<span class="hol-dot"></span>' + hol.label;
+          cell.appendChild(hl);
+        }
+      }
+
+      grid.appendChild(cell);
+    }
+
+    // Trailing empty cells
+    const totalCells = startDow + daysInMon;
+    const trailing   = (7 - (totalCells % 7)) % 7;
+    for (let i = 0; i < trailing; i++) {
+      const e = document.createElement('div');
+      e.className = 'day-cell empty';
+      grid.appendChild(e);
+    }
+
+    card.appendChild(grid);
+    container.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+renderStats();
+renderCalendar();
+</script>
+</body>
+</html>
